@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Heliotrope: Rotating Solar Tracker for Delhi</title>
+<style>
+:root { color-scheme: light; --bg: #ffffff; --surface: #f5f4f0; --text: #1a1a18; --muted: #5f5e5a; --border: rgba(0,0,0,0.12); --border-strong: rgba(0,0,0,0.3); --accent: #854F0B; --accent-bg: #FAEEDA; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; --bg: #1c1c1a; --surface: #2a2a27; --text: #f1efe8; --muted: #b4b2a9; --border: rgba(255,255,255,0.14); --border-strong: rgba(255,255,255,0.3); --accent: #FAC775; --accent-bg: #412402; } }
+:root[data-theme="dark"] { color-scheme: dark; --bg: #1c1c1a; --surface: #2a2a27; --text: #f1efe8; --muted: #b4b2a9; --border: rgba(255,255,255,0.14); --border-strong: rgba(255,255,255,0.3); --accent: #FAC775; --accent-bg: #412402; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 18px; }
+.hero { padding: 52px 0 32px; background: var(--accent-bg); }
+.hero .tag { display: inline-block; font-size: 12px; color: var(--accent); border: 0.5px solid var(--accent); border-radius: 999px; padding: 2px 10px; margin-bottom: 12px; }
+.hero h1 { font-size: 30px; font-weight: 500; margin: 0 0 10px; line-height: 1.2; color: var(--text); }
+.hero p { font-size: 16px; color: var(--text); margin: 0; }
+nav { display: flex; gap: 16px; padding: 14px 0; font-size: 14px; border-bottom: 0.5px solid var(--border); flex-wrap: wrap; }
+nav a { color: var(--accent); text-decoration: none; }
+section { padding: 34px 0; border-bottom: 0.5px solid var(--border); }
+h2 { font-size: 22px; font-weight: 500; margin: 0 0 8px; }
+h3 { font-size: 16px; font-weight: 500; margin: 20px 0 6px; }
+p { color: var(--muted); margin: 0 0 12px; font-size: 15px; }
+ul { color: var(--muted); padding-left: 20px; margin: 0 0 12px; font-size: 15px; }
+li { margin-bottom: 6px; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-top: 14px; }
+.card { background: var(--surface); border-radius: 12px; padding: 16px; }
+.card h3 { margin-top: 0; }
+.card p { margin: 0; font-size: 14px; }
+.big { font-size: 26px; font-weight: 500; color: var(--text); margin: 0 0 2px; }
+.row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.row .lbl { font-size: 14px; color: var(--muted); min-width: 60px; }
+.row input[type=range] { flex: 1; accent-color: var(--accent); }
+.val { font-size: 14px; font-weight: 500; min-width: 80px; text-align: right; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; margin-top: 12px; }
+.stat { background: var(--bg); border-radius: 8px; padding: 12px; }
+.stat .k { font-size: 12px; color: var(--muted); margin: 0; }
+.stat .v { font-size: 20px; font-weight: 500; margin: 4px 0 0; color: var(--text); }
+.demo { background: var(--surface); border-radius: 12px; padding: 16px; }
+svg { display: block; width: 100%; height: auto; }
+.note { font-size: 14px; color: var(--muted); margin: 10px 0 0; min-height: 20px; }
+.foot { font-size: 13px; color: var(--muted); padding: 24px 0 40px; }
+@media (max-width: 520px) { .cards { grid-template-columns: 1fr; } .stats { grid-template-columns: 1fr 1fr; } .hero h1 { font-size: 24px; } }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="wrap">
+<span class="tag">Solar energy · Delhi</span>
+<h1>Heliotrope: a solar panel that follows the sun</h1>
+<p>A fixed panel misses much of the sunlight. A rotating panel turns with the sun. Here is why it matters and how we test it.</p>
+</div>
+</header>
+<nav class="wrap">
+<a href="#why">Why it matters</a>
+<a href="#demo">Try the demo</a>
+<a href="#dust">Dust in Delhi</a>
+<a href="#faq">FAQ</a>
+</nav>
+
+<section id="why" class="wrap">
+<h2>Why solar, and why tracking?</h2>
+<p>Solar power is one of India's main clean energy sources. Installed solar capacity crossed about 168 GW by August 2026 (MNRE data reported in the press; check the official figure before citing). Most of it is still in fixed panels.</p>
+<div class="cards">
+<div class="card">
+<h3>The sun moves</h3>
+<p>The sun moves about 15° every hour. A fixed panel is only square to the sun for a short time each day.</p>
+</div>
+<div class="card">
+<h3>Angle matters</h3>
+<p>Output falls with cos θ, where θ is the angle between the sun and the panel. At 60° off-angle, a flat panel gets about half its maximum power.</p>
+</div>
+</div>
+</section>
+
+<section id="demo" class="wrap">
+<h2>Try the demo</h2>
+<p>Move the time slider through the day. The rotating panel (blue) turns to face the sun, while the fixed panel (grey) does not move.</p>
+<div class="demo">
+<div class="row">
+<span class="lbl">Time</span>
+<input type="range" id="h" min="6" max="18" step="0.5" value="10">
+<span id="hv" class="val">10:00</span>
+</div>
+<svg viewBox="0 0 380 260" role="img" aria-label="Rotating solar panel and a fixed panel in side view">
+<path d="M80 170 A110 110 0 0 1 300 170" fill="none" stroke="var(--border-strong)" stroke-width="0.8" stroke-dasharray="3 4"/>
+<line x1="0" y1="240" x2="380" y2="240" stroke="var(--border-strong)" stroke-width="0.6"/>
+<line id="ray" x1="190" y1="110" x2="190" y2="200" stroke="#EF9F27" stroke-width="1" stroke-dasharray="4 3"/>
+<circle id="sun" cx="190" cy="110" r="13" fill="#FAC775" stroke="#BA7517" stroke-width="0.5"/>
+<ellipse cx="190" cy="240" rx="36" ry="7" fill="#888780"/>
+<rect x="184" y="200" width="12" height="40" fill="#888780"/>
+<g id="trk" transform="rotate(0 190 200)">
+<rect x="130" y="194" width="120" height="10" rx="2" fill="#85B7EB" stroke="#185FA5" stroke-width="0.5"/>
+</g>
+<rect x="178" y="192" width="24" height="14" rx="3" fill="#F0997B" stroke="#993C1D" stroke-width="0.5"/>
+<rect x="260" y="212" width="90" height="8" rx="2" fill="#B4B2A9" stroke="#5F5E5A" stroke-width="0.5"/>
+<rect x="302" y="220" width="8" height="20" fill="#888780"/>
+<text x="305" y="252" text-anchor="middle" font-size="12" fill="var(--muted)">Fixed</text>
+<text x="190" y="252" text-anchor="middle" font-size="12" fill="var(--muted)">Rotating</text>
+</svg>
+<div class="stats">
+<div class="stat"><p class="k">Sun angle</p><p id="sa" class="v">-30°</p></div>
+<div class="stat"><p class="k">Fixed panel power</p><p id="fp" class="v">87%</p></div>
+<div class="stat"><p class="k">Rotating panel gain</p><p id="gn" class="v">15%</p></div>
+</div>
+<p id="note" class="note"></p>
+</div>
+</section>
+
+<section id="dust" class="wrap">
+<h2>Dust in Delhi: why cleaning matters</h2>
+<p>Dust settling on a panel blocks light and cuts output. The amount depends on local PM2.5 and on how long the panel goes without cleaning. Our project measures this loss against PM2.5 and studies when cleaning pays off.</p>
+<ul>
+<li>Check the local air quality on the CPCB or official AQI app before a cleaning decision.</li>
+<li>Clean panels only when the lost energy is worth more than the water and labour cost.</li>
+<li>Use minimal water. Water is scarce in Delhi.</li>
+</ul>
+</section>
+
+<section id="faq" class="wrap">
+<h2>Questions people ask</h2>
+<h3>Is a rotating panel always better?</h3>
+<p>No. It gives more energy when the sun is well off the panel's flat position, but it has moving parts that need maintenance. Our test compares the gain with the cost.</p>
+<h3>Is this a real power plant?</h3>
+<p>No. It is a small prototype to test the method. Results apply to the test site and setup only.</p>
+<h3>Can I build one?</h3>
+<p>Yes. The basic parts are an Arduino, a servo motor, two light sensors (LDRs) and small panels. The estimated cost is around ₹800 to ₹1,200.</p>
+</section>
+
+<div class="wrap foot">Educational project. Demo values are illustrative, not measured results. Figures should be checked against official sources before citing.</div>
+
+<script>
+var h = document.getElementById('h');
+var hv = document.getElementById('hv');
+var sa = document.getElementById('sa');
+var fp = document.getElementById('fp');
+var gn = document.getElementById('gn');
+var note = document.getElementById('note');
+var trk = document.getElementById('trk');
+var sun = document.getElementById('sun');
+var ray = document.getElementById('ray');
+function upd() {
+  var hr = parseFloat(h.value);
+  var hh = Math.floor(hr);
+  var mm = (hr - hh) === 0.5 ? '30' : '00';
+  hv.textContent = (hh < 10 ? '0' : '') + hh + ':' + mm;
+  var angle = (hr - 12) * 15;
+  var r = angle * Math.PI / 180;
+  var sx = 190 + 110 * Math.sin(r);
+  var sy = 230 - 110 * Math.cos(r);
+  sun.setAttribute('cx', sx.toFixed(1));
+  sun.setAttribute('cy', sy.toFixed(1));
+  ray.setAttribute('x1', sx.toFixed(1));
+  ray.setAttribute('y1', sy.toFixed(1));
+  trk.setAttribute('transform', 'rotate(' + angle.toFixed(1) + ' 190 200)');
+  sa.textContent = Math.round(angle) + '°';
+  var fixed = Math.max(0, Math.cos(r));
+  fp.textContent = Math.round(fixed * 100) + '%';
+  gn.textContent = (fixed > 0.05 ? Math.round((1 / fixed - 1) * 100) : 0) + '%';
+  note.textContent = 'At ' + Math.abs(Math.round(angle)) + '° from straight up, a fixed panel gets ' + Math.round(fixed * 100) + '% of full power. The rotating panel turns to stay near 100%.';
+}
+h.addEventListener('input', upd);
+upd();
+</script>
+</body>
+</html>
